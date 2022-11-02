@@ -22,7 +22,7 @@ import App from "Appm";
 import { MaterialUIControllerProvider } from "context";
 
 import { Provider } from "react-redux";
-import store from "./store";
+import store from "./redux/store";
 
 ReactDOM.render(
   <BrowserRouter>

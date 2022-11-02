@@ -16,7 +16,7 @@ Coded by www.creative-tim.com
 */
 
 import { useState, useEffect } from "react";
-
+import { useSelector, useDispatch } from "react-redux";
 // Material Dashboard 2 React components
 import MDBox from "components/MDBox";
 import MDTypography from "components/MDTypography";
@@ -28,18 +28,16 @@ import team2 from "assets/images/team-2.jpg";
 // import team3 from "assets/images/team-3.jpg";
 // mport team4 from "assets/images/team-4.jpg";
 
-import { collection, getDocs } from "firebase/firestore";
-import db from "../../../firebase";
+import { getWorkers } from "../../../redux/slices/workersSlice";
 
 export default function data() {
   const [workers, setWorkers] = useState([]);
-
-  useEffect(async () => {
-    getDocs(collection(db, "workers")).then((querySnapshot) => {
-      const newData = querySnapshot.docs.map((doc) => ({ ...doc.data() }));
-      setWorkers(newData);
-      console.log(workers, newData);
-    });
+  const w = useSelector((state) => state.workers);
+  const dispatch = useDispatch();
+  useEffect(() => {
+    dispatch(getWorkers);
+    setWorkers(w);
+    console.log(workers);
   });
 
   const Name = ({ image, name, level }) => (

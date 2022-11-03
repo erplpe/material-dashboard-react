@@ -51,10 +51,11 @@ export default function data() {
   return {
     columns: [
       { Header: "machine", accessor: "author", width: "45%", align: "left" },
-      { Header: "ongoing project", accessor: "function", align: "left" },
+      { Header: "ongoing project", accessor: "project", align: "left" },
       { Header: "status", accessor: "status", align: "center" },
-      { Header: "worker", accessor: "employed", align: "center" },
-      { Header: "action", accessor: "action", align: "center" },
+      { Header: "worker", accessor: "worker", align: "center" },
+      { Header: "started time", accessor: "st", align: "center" },
+      { Header: "time assigned", accessor: "ta", align: "center" },
     ],
 
     rows: [

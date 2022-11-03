@@ -38,10 +38,13 @@ Coded by www.creative-tim.com
 // Material Dashboard 2 React layouts
 import Dashboard from "layouts/dashboard";
 import Workers from "layouts/workers";
+// import Works from "layouts/works";
 import Machines from "layouts/machines";
+import Projects from "layouts/projects";
+import ProjectDetails from "layouts/projects/projectDetails";
 // import RTL from "layouts/rtl";
-import Notifications from "layouts/notifications";
-import Profile from "layouts/profile";
+// import Notifications from "layouts/notifications";
+// import Profile from "layouts/profile";
 import SignIn from "layouts/authentication/sign-in";
 import SignUp from "layouts/authentication/sign-up";
 
@@ -59,10 +62,26 @@ const routes = [
   },
   {
     type: "collapse",
+    name: "Projects",
+    key: "projects",
+    icon: <Icon fontSize="small">table_view</Icon>,
+    route: "/projects",
+    component: <Projects />,
+  },
+  {
+    type: "collapse",
+    name: "Project Details",
+    key: "projectDetails",
+    icon: <Icon fontSize="small">table_view</Icon>,
+    route: "/projects/:id",
+    component: <ProjectDetails />,
+  },
+  {
+    type: "collapse",
     name: "Machines",
     key: "machines",
     icon: <Icon fontSize="small">table_view</Icon>,
-    route: "/tables",
+    route: "/machines",
     component: <Machines />,
   },
   {
@@ -70,9 +89,17 @@ const routes = [
     name: "Workers",
     key: "workers",
     icon: <Icon fontSize="small">receipt_long</Icon>,
-    route: "/billing",
+    route: "/workers",
     component: <Workers />,
   },
+  // {
+  //   type: "collapse",
+  //   name: "Works",
+  //   key: "works",
+  //   icon: <Icon fontSize="small">receipt_long</Icon>,
+  //   route: "/works",
+  //   component: <Works />,
+  // },
   // {
   //   type: "collapse",
   //   name: "RTL",
@@ -81,22 +108,22 @@ const routes = [
   //   route: "/rtl",
   //   component: <RTL />,
   // },
-  {
-    type: "collapse",
-    name: "Notifications",
-    key: "notifications",
-    icon: <Icon fontSize="small">notifications</Icon>,
-    route: "/notifications",
-    component: <Notifications />,
-  },
-  {
-    type: "collapse",
-    name: "Profile",
-    key: "profile",
-    icon: <Icon fontSize="small">person</Icon>,
-    route: "/profile",
-    component: <Profile />,
-  },
+  // {
+  //   type: "collapse",
+  //   name: "Notifications",
+  //   key: "notifications",
+  //   icon: <Icon fontSize="small">notifications</Icon>,
+  //   route: "/notifications",
+  //   component: <Notifications />,
+  // },
+  // {
+  //   type: "collapse",
+  //   name: "Profile",
+  //   key: "profile",
+  //   icon: <Icon fontSize="small">person</Icon>,
+  //   route: "/profile",
+  //   component: <Profile />,
+  // },
   {
     type: "collapse",
     name: "Sign In",

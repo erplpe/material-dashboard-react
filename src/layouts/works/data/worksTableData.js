@@ -28,17 +28,17 @@ import team2 from "assets/images/team-2.jpg";
 // import team3 from "assets/images/team-3.jpg";
 // mport team4 from "assets/images/team-4.jpg";
 
-import { getWorkers } from "../../../redux/slices/workersSlice";
+import { getWorks } from "../../../redux/slices/worksSlice";
 
 export default function data() {
-  const [workers, setWorkers] = useState([]);
-  const w = useSelector((state) => state.workers);
+  const [works, setWorks] = useState([]);
+  const w = useSelector((state) => state.works);
   const dispatch = useDispatch();
   useEffect(() => {
-    dispatch(getWorkers());
-    setWorkers(w);
+    dispatch(getWorks());
+    setWorks(w);
     console.log(w);
-  }, [workers]);
+  }, [works]);
 
   const Name = ({ image, name, id }) => (
     <MDBox display="flex" alignItems="center" lineHeight={1}>
@@ -69,7 +69,7 @@ export default function data() {
       { Header: "working", accessor: "working", align: "center" },
     ],
 
-    rows: workers.map((worker) => ({
+    rows: works.map((worker) => ({
       name: <Name image={team2} name={worker.name} id={worker.id} />,
       work: (
         <MDTypography component="a" href="#" variant="caption" color="text" fontWeight="medium">

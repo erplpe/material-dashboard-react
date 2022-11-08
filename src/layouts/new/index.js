@@ -40,7 +40,7 @@ function New() {
   const [customer,setCustomer] = useState(0);
   const [step,setStep] = useState(1);
 
-  const handlePartsCountChange = (e) => (setPartsCount(e.target.value));
+  const handlePartsCountChange = (e) => (setPartsCount(parseInt(e.target.value,10)));
   const handleCustomer = (e) => (setCustomer(e.target.value));
   const handleStepChange = (e) => {
     setStep(step+1);

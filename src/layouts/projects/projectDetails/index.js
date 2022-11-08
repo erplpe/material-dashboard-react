@@ -13,6 +13,13 @@ Coded by www.creative-tim.com
 * The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
 */
 /* eslint-disable no-unused-vars */
+import { 
+  DataGrid,
+  GridCellEditStopParams,
+  GridCellEditStopReasons,
+  MuiEvent, 
+} from '@mui/x-data-grid';
+
 import { useEffect, useState } from "react";
 import PropTypes from "prop-types";
 // @mui material components
@@ -33,8 +40,9 @@ import Footer from "examples/Footer";
 // Data
 import partsData from "./data";
 
-function ProjectDetails() {
-  const { cards } = partsData();
+function ProjectDetails({pKey}) {
+  console.log(pKey);
+  const { rows,columns } = partsData(pKey);
 
   return (
     <DashboardLayout>
@@ -57,9 +65,23 @@ function ProjectDetails() {
                   Parts
                 </MDTypography>
               </MDBox>
-              <MDBox pt={3}>
+              <MDBox
+                mx={2}
+                mt={3}
+                py={3}
+                px={2}
+              >
                 <Grid container rowSpacing={5} columnSpacing={{ xs: 1, sm: 2, md: 3 }}>
-                  {cards}
+                  <div style={{ height: 300, width: '100%' }}>
+                    <DataGrid
+                      rows={rows}
+                      columns={columns}
+                      experimentalFeatures={{ newEditingApi: true }}
+                      onCellEditStop={(params, event) => {
+                        console.log(event);
+                      }}
+                    />
+                    </div>
                 </Grid>
               </MDBox>
             </Card>
@@ -71,5 +93,12 @@ function ProjectDetails() {
   );
 }
 
+ProjectDetails.defaultProps={
+  pKey: "uCNSDymar6721PgvYxrp",
+}
+
+ProjectDetails.propTypes={
+  pKey: PropTypes.string,
+}
 
 export default ProjectDetails;

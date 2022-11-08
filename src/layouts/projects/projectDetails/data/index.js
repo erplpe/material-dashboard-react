@@ -16,16 +16,11 @@ Coded by www.creative-tim.com
 */
 
 // @mui material components
-import Grid from "@mui/material/Grid";
 
 import { useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
-// Material Dashboard 2 React components
-import MDBox from "components/MDBox";
-import DefaultProjectCard from "examples/Cards/ProjectCards/DefaultProjectCard";
 
 import { getParts } from "redux/slices/partsSlice";
-import sw from "assets/images/sw.png";
 
 export default function data() {
   const [parts, setParts] = useState([]);
@@ -39,24 +34,16 @@ export default function data() {
   }, [prt.length]);
 
   return {
-    cards: parts.map((part) => (
-      <Grid item xs={12} md={6} lg={3} key={part.drawing_number}>
-        <MDBox mb={1.5}>
-          <DefaultProjectCard
-            image={sw}
-            label={`Drawing Number: ${part.drawing_number}`}
-            title={`Estimated Time: ${part.estimated_time}`}
-            description={`${part.completed}/${part.works_count} done!`}
-            action={{
-              type: "internal",
-              route: `/projects/${pKey}/${part.drawing_number}`,
-              color: "info",
-              label: "view project",
-            }}
-            authors={[]}
-          />
-        </MDBox>
-      </Grid>
-    )),
-  };
+    columns:[
+      { field: 'dnum', headerName: 'Drawing Number', type:"number", width: 180, editable: true },
+      { field: 'et', headerName: 'Estimated Time', type:"number", width: 180, editable: true },
+      { field: 'status', headerName: 'Status', type:"boolean", width: 180, editable: true },
+    ],
+    rows:parts.map((part) => ({
+      id:Math.round(Math.random()*1000),
+      dnum: part.drawing_number,
+      et: part.estimated_time,
+      status:part.status,
+    })),
+  }
 }

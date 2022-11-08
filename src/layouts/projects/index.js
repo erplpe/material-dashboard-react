@@ -13,6 +13,7 @@ Coded by www.creative-tim.com
 * The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
 */
 /* eslint-disable no-unused-vars */
+
 // @mui material components
 import Grid from "@mui/material/Grid";
 import Card from "@mui/material/Card";
@@ -29,11 +30,11 @@ import Footer from "examples/Footer";
 import DataTable from "examples/Tables/DataTable";
 
 // Data
-import projectsTableData from "layouts/projects/data/projectsTableData";
+import projectsTableData from "layouts/projects/data";
+
 
 function Projects() {
   const { cards } = projectsTableData();
-  console.log(cards);
   return (
     <DashboardLayout>
       <DashboardNavbar />
@@ -53,6 +54,33 @@ function Projects() {
               >
                 <MDTypography variant="h6" color="white">
                   Projects
+                </MDTypography>
+              </MDBox>
+              <MDBox pt={3}>
+                <Grid container rowSpacing={5} columnSpacing={{ xs: 1, sm: 2, md: 3 }}>
+                  {cards}
+                </Grid>
+              </MDBox>
+            </Card>
+          </Grid>
+        </Grid>
+      </MDBox>
+      <MDBox pt={6} pb={3}>
+        <Grid container spacing={6}>
+          <Grid item xs={12}>
+            <Card>
+              <MDBox
+                mx={2}
+                mt={-3}
+                py={3}
+                px={2}
+                variant="gradient"
+                bgColor="info"
+                borderRadius="lg"
+                coloredShadow="info"
+              >
+                <MDTypography variant="h6" color="white">
+                  Add a New Project
                 </MDTypography>
               </MDBox>
               <MDBox pt={3}>

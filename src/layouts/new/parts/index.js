@@ -28,10 +28,10 @@ import Footer from "examples/Footer";
 import DataTable from "examples/Tables/DataTable";
 
 // Data
-import worksTableData from "layouts/works/data/worksTableData";
+import NewPartsData from "./data";
 
-function Works() {
-  const { columns, rows } = worksTableData();
+function NewParts(partsCount) {
+  const { columns, rows } = NewPartsData(partsCount);
 
   return (
     <DashboardLayout>
@@ -51,7 +51,7 @@ function Works() {
                 coloredShadow="info"
               >
                 <MDTypography variant="h6" color="white">
-                  Works Table
+                  Workers Table
                 </MDTypography>
               </MDBox>
               <MDBox pt={3}>
@@ -72,4 +72,4 @@ function Works() {
   );
 }
 
-export default Works;
+export default NewParts;

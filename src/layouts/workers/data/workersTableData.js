@@ -37,8 +37,7 @@ export default function data() {
   useEffect(() => {
     dispatch(getWorkers());
     setWorkers(w);
-    console.log(w);
-  }, [workers]);
+  }, [w.length]);
 
   const Name = ({ image, name, id }) => (
     <MDBox display="flex" alignItems="center" lineHeight={1}>

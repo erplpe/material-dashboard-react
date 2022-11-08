@@ -22,33 +22,38 @@ import { useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 // Material Dashboard 2 React components
 import MDBox from "components/MDBox";
-import ComplexStatisticsCard from "examples/Cards/StatisticsCards/ComplexStatisticsCard";
+import DefaultProjectCard from "examples/Cards/ProjectCards/DefaultProjectCard";
 
-import { getprojects } from "redux/slices/projectsSlice";
+import { getParts } from "redux/slices/partsSlice";
+import sw from "assets/images/sw.png";
 
 export default function data() {
-  const [projects, setProjects] = useState([]);
-  const prj = useSelector((state) => state.projects);
+  const [parts, setParts] = useState([]);
+  const pKey = window.location.pathname.split("/")[2];
+  const prt = useSelector((state) => state.parts);
   const dispatch = useDispatch();
   useEffect(() => {
-    dispatch(getprojects());
-    setProjects(prj);
-  }, [projects]);
+    dispatch(getParts(pKey));
+    setParts(prt);
+    console.log(prt);
+  }, [prt.length]);
 
   return {
-    cards: projects.map((project) => (
-      <Grid item xs={12} md={6} lg={3}>
-        <MDBox mb={1.5} href={`/projects/${project.id}`}>
-          <ComplexStatisticsCard
-            color="dark"
-            icon="weekend"
-            title={project.customer}
-            count={project.id}
-            percentage={{
-              color: "success",
-              amount: "55%",
-              label: "Completed",
+    cards: parts.map((part) => (
+      <Grid item xs={12} md={6} lg={3} key={part.drawing_number}>
+        <MDBox mb={1.5}>
+          <DefaultProjectCard
+            image={sw}
+            label={`Drawing Number: ${part.drawing_number}`}
+            title={`Estimated Time: ${part.estimated_time}`}
+            description={`${part.completed}/${part.works_count} done!`}
+            action={{
+              type: "internal",
+              route: `/projects/${pKey}/${part.drawing_number}`,
+              color: "info",
+              label: "view project",
             }}
+            authors={[]}
           />
         </MDBox>
       </Grid>

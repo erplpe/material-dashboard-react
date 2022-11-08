@@ -4,7 +4,12 @@ import db from "../../firebase";
 
 export const projectsSlice = createSlice({
   name: "projects",
-  initialState: [{ name: "asela", id: "36454", working: true }],
+  initialState: [{
+    customer: "",
+    id:0,
+    parts_count: 0,
+    key:"",
+  }],
   reducers: {},
   /* eslint-disable no-use-before-define */
   /* eslint-disable no-unused-vars */
@@ -22,6 +27,7 @@ export const getprojects = createAsyncThunk("projects/getprojects", async () => 
   const data = await getDocs(collection(db, "projects")).then((querySnapshot) => {
     const newData = querySnapshot.docs.map((doc) => {
       const originalData = doc.data();
+      originalData.key = doc.id;
       return { ...originalData };
     });
     return newData;

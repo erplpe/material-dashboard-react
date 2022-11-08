@@ -12,9 +12,9 @@ Coded by www.creative-tim.com
 
 * The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
 */
-/* eslint-disable no-unused-vars */
-import { useEffect, useState } from "react";
-import PropTypes from "prop-types";
+
+import MUIDataTable from "mui-datatables";
+
 // @mui material components
 import Grid from "@mui/material/Grid";
 import Card from "@mui/material/Card";
@@ -24,18 +24,29 @@ import MDBox from "components/MDBox";
 import MDTypography from "components/MDTypography";
 
 // Material Dashboard 2 React example components
-// import ComplexStatisticsCard from "examples/Cards/StatisticsCards/ComplexStatisticsCard";
 import DashboardLayout from "examples/LayoutContainers/DashboardLayout";
 import DashboardNavbar from "examples/Navbars/DashboardNavbar";
 import Footer from "examples/Footer";
 // import DataTable from "examples/Tables/DataTable";
 
 // Data
-import partsData from "./data";
+// import machinesTableData from "layouts/machines/data/machinesTableData";
+// import projectsTableData from "layouts/machines/data/projectsTableData";
 
-function ProjectDetails() {
-  const { cards } = partsData();
+function Machines() {
+  const columns = ["Name", "Company", "City", "State"];
 
+  const data = [
+  ["Joe James", "Test Corp", "Yonkers", "NY"],
+  ["John Walsh", "Test Corp", "Hartford", "CT"],
+  ["Bob Herm", "Test Corp", "Tampa", "FL"],
+  ["James Houston", "Test Corp", "Dallas", "TX"],
+  ];
+
+  const options = {
+    filterType: 'checkbox',
+    rowsPerPage: 2
+  };
   return (
     <DashboardLayout>
       <DashboardNavbar />
@@ -54,13 +65,16 @@ function ProjectDetails() {
                 coloredShadow="info"
               >
                 <MDTypography variant="h6" color="white">
-                  Parts
+                  Milling
                 </MDTypography>
               </MDBox>
               <MDBox pt={3}>
-                <Grid container rowSpacing={5} columnSpacing={{ xs: 1, sm: 2, md: 3 }}>
-                  {cards}
-                </Grid>
+                <MUIDataTable
+                  title="Employee List"
+                  data={data}
+                  columns={columns}
+                  options={options}
+                />
               </MDBox>
             </Card>
           </Grid>
@@ -71,5 +85,6 @@ function ProjectDetails() {
   );
 }
 
+export default Machines;
 
-export default ProjectDetails;
+

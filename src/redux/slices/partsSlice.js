@@ -2,8 +2,8 @@ import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import { getDocs, collection } from "firebase/firestore";
 import db from "../../firebase";
 
-export const workersSlice = createSlice({
-  name: "workers",
+export const partsSlice = createSlice({
+  name: "parts",
   initialState: [],
   reducers: {},
   /* eslint-disable no-use-before-define */
@@ -11,18 +11,17 @@ export const workersSlice = createSlice({
   /* eslint-disable no-param-reassign */
   /* eslint-disable prefer-destructuring */
   extraReducers(builder) {
-    builder.addCase(getWorkers.fulfilled, (state, action) => {
+    builder.addCase(getParts.fulfilled, (state, action) => {
       const data = action.payload.payload;
       return data;
     });
   },
 });
 
-export const getWorkers = createAsyncThunk("workers/getWorkers", async () => {
-  const data = await getDocs(collection(db, "workers")).then((querySnapshot) => {
+export const getParts = createAsyncThunk("parts/getParts", async (projectKey) => {
+  const data = await getDocs(collection(db, `projects/${projectKey}/parts`)).then((querySnapshot) => {
     const newData = querySnapshot.docs.map((doc) => {
       const originalData = doc.data();
-      originalData.assigned_work = originalData.assigned_work.path.split("/")[3];
       return { ...originalData };
     });
     return newData;
@@ -30,4 +29,4 @@ export const getWorkers = createAsyncThunk("workers/getWorkers", async () => {
   return { payload: data };
 });
 
-export default workersSlice.reducer;
+export default partsSlice.reducer;

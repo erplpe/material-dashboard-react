@@ -41,17 +41,20 @@ import Workers from "layouts/workers";
 // import Works from "layouts/works";
 import Machines from "layouts/machines";
 import Projects from "layouts/projects";
-import ProjectDetails from "layouts/projects/projectDetails";
+import New from "layouts/new"
+import Reports from "layouts/reports"
 // import RTL from "layouts/rtl";
 // import Notifications from "layouts/notifications";
 // import Profile from "layouts/profile";
-import SignIn from "layouts/authentication/sign-in";
-import SignUp from "layouts/authentication/sign-up";
+// import SignIn from "layouts/authentication/sign-in";
+// import SignUp from "layouts/authentication/sign-up";
+import ProjectDetails from "layouts/projects/projectDetails";
 
 // @mui icons
 import Icon from "@mui/material/Icon";
 
-const routes = [
+
+export const routes = [
   {
     type: "collapse",
     name: "Dashboard",
@@ -70,14 +73,6 @@ const routes = [
   },
   {
     type: "collapse",
-    name: "Project Details",
-    key: "projectDetails",
-    icon: <Icon fontSize="small">table_view</Icon>,
-    route: "/projects/:id",
-    component: <ProjectDetails />,
-  },
-  {
-    type: "collapse",
     name: "Machines",
     key: "machines",
     icon: <Icon fontSize="small">table_view</Icon>,
@@ -91,6 +86,22 @@ const routes = [
     icon: <Icon fontSize="small">receipt_long</Icon>,
     route: "/workers",
     component: <Workers />,
+  },
+  {
+    type: "collapse",
+    name: "New Project",
+    key: "newp",
+    icon: <Icon fontSize="small">receipt_long</Icon>,
+    route: "/new_project",
+    component: <New />,
+  },
+  {
+    type: "collapse",
+    name: "Reports",
+    key: "rep",
+    icon: <Icon fontSize="small">receipt_long</Icon>,
+    route: "/reports",
+    component: <Reports />,
   },
   // {
   //   type: "collapse",
@@ -124,22 +135,29 @@ const routes = [
   //   route: "/profile",
   //   component: <Profile />,
   // },
-  {
-    type: "collapse",
-    name: "Sign In",
-    key: "sign-in",
-    icon: <Icon fontSize="small">login</Icon>,
-    route: "/authentication/sign-in",
-    component: <SignIn />,
-  },
-  {
-    type: "collapse",
-    name: "Sign Up",
-    key: "sign-up",
-    icon: <Icon fontSize="small">assignment</Icon>,
-    route: "/authentication/sign-up",
-    component: <SignUp />,
-  },
+  // {
+  //   type: "collapse",
+  //   name: "Sign In",
+  //   key: "sign-in",
+  //   icon: <Icon fontSize="small">login</Icon>,
+  //   route: "/authentication/sign-in",
+  //   component: <SignIn />,
+  // },
+  // {
+  //   type: "collapse",
+  //   name: "Sign Up",
+  //   key: "sign-up",
+  //   icon: <Icon fontSize="small">assignment</Icon>,
+  //   route: "/authentication/sign-up",
+  //   component: <SignUp />,
+  // },
 ];
 
-export default routes;
+export const dynamicRoutes=[
+  {
+    route: "/projects/:id",
+    component: <ProjectDetails/>,
+    key: "dyn-prj"
+  }
+];
+

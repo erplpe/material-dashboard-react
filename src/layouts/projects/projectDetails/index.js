@@ -17,7 +17,8 @@ import {
   DataGrid,
   GridCellEditStopParams,
   GridCellEditStopReasons,
-  MuiEvent, 
+  MuiEvent,
+  GridToolbar
 } from '@mui/x-data-grid';
 
 import { useEffect, useState } from "react";
@@ -29,6 +30,7 @@ import Card from "@mui/material/Card";
 // Material Dashboard 2 React components
 import MDBox from "components/MDBox";
 import MDTypography from "components/MDTypography";
+import MDButton from 'components/MDButton';
 
 // Material Dashboard 2 React example components
 // import ComplexStatisticsCard from "examples/Cards/StatisticsCards/ComplexStatisticsCard";
@@ -40,9 +42,18 @@ import Footer from "examples/Footer";
 // Data
 import partsData from "./data";
 
+
 function ProjectDetails({pKey}) {
-  console.log(pKey);
+  const [edited, setEdited] = useState([]);
   const { rows,columns } = partsData(pKey);
+
+  const handlEdit = (id) => {
+    setEdited(edited.concat(id));
+  }
+
+  const handleSave = (id) => {
+    setEdited(edited.concat(id));
+  }
 
   return (
     <DashboardLayout>
@@ -72,17 +83,26 @@ function ProjectDetails({pKey}) {
                 px={2}
               >
                 <Grid container rowSpacing={5} columnSpacing={{ xs: 1, sm: 2, md: 3 }}>
-                  <div style={{ height: 300, width: '100%' }}>
+                  <div style={{ height: 500, width: '100%' }}>
                     <DataGrid
                       rows={rows}
                       columns={columns}
                       experimentalFeatures={{ newEditingApi: true }}
                       onCellEditStop={(params, event) => {
-                        console.log(event);
+                        handlEdit(params.id);
                       }}
+                      components={{Toolbar: GridToolbar}}
                     />
                     </div>
                 </Grid>
+                <MDBox
+                mx={2}
+                mt={3}
+                py={3}
+                px={2}
+                >
+                  <MDButton onClick={handleSave} color="info">Save</MDButton>
+                </MDBox>
               </MDBox>
             </Card>
           </Grid>

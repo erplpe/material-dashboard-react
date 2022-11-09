@@ -43,6 +43,7 @@ import Machines from "layouts/machines";
 import Projects from "layouts/projects";
 import New from "layouts/new"
 import Reports from "layouts/reports"
+import Customers from "layouts/customers";
 // import RTL from "layouts/rtl";
 // import Notifications from "layouts/notifications";
 // import Profile from "layouts/profile";
@@ -62,6 +63,14 @@ export const routes = [
     icon: <Icon fontSize="small">dashboard</Icon>,
     route: "/dashboard",
     component: <Dashboard />,
+  },
+  {
+    type: "collapse",
+    name: "Customers",
+    key: "customers",
+    icon: <Icon fontSize="small">dashboard</Icon>,
+    route: "/customers",
+    component: <Customers />,
   },
   {
     type: "collapse",
@@ -89,7 +98,7 @@ export const routes = [
   },
   {
     type: "collapse",
-    name: "New Project",
+    name: "Add New",
     key: "newp",
     icon: <Icon fontSize="small">receipt_long</Icon>,
     route: "/new_project",

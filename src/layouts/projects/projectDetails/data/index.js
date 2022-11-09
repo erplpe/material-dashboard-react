@@ -17,6 +17,9 @@ Coded by www.creative-tim.com
 
 // @mui material components
 
+import { Grid } from "@mui/material";
+import MDButton from "components/MDButton";
+import MDTypography from "components/MDTypography";
 import { useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 
@@ -35,13 +38,43 @@ export default function data() {
 
   return {
     columns:[
-      { field: 'dnum', headerName: 'Drawing Number', type:"number", width: 180, editable: true },
-      { field: 'et', headerName: 'Estimated Time', type:"number", width: 180, editable: true },
+      { 
+        field: 'pnum', 
+        headerName: 'Part Number', 
+        type:"string", 
+        width: 240, 
+        editable: true,
+        renderCell : (params) =>(
+          <Grid container spacing={{ xs: 2, md: 3 }} columns={{ xs: 4, sm: 8, md: 12 }}>
+            <Grid item xs={4}>
+              <MDTypography>{params.value}</MDTypography>
+            </Grid>
+            <Grid item xs={8}>
+              <MDButton color="info">
+              <a href={`${window.location.pathname}/${params.value}`}>Progress</a>
+              </MDButton>
+            </Grid>
+          </Grid>
+        ),
+      },
+      { field: 'et', headerName: 'Estimated Time', type:"number", width: 240, editable: true },
       { field: 'status', headerName: 'Status', type:"boolean", width: 180, editable: true },
+      { 
+        field: 'drawing', 
+        headerName: 'Drawing', 
+        width: 180, 
+        editable: false,
+        renderCell : () =>(
+          <strong>
+            <a href="/">Open Drawing</a>
+          </strong>
+          
+        ),
+       },
     ],
     rows:parts.map((part) => ({
-      id:Math.round(Math.random()*1000),
-      dnum: part.drawing_number,
+      id:part.id,
+      pnum: part.drawing_number,
       et: part.estimated_time,
       status:part.status,
     })),

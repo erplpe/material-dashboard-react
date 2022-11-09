@@ -22,6 +22,7 @@ export const getParts = createAsyncThunk("parts/getParts", async (projectKey) =>
   const data = await getDocs(collection(db, `projects/${projectKey}/parts`)).then((querySnapshot) => {
     const newData = querySnapshot.docs.map((doc) => {
       const originalData = doc.data();
+      originalData.id=doc.id;
       return { ...originalData };
     });
     return newData;

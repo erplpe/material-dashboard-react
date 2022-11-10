@@ -16,114 +16,124 @@ Coded by www.creative-tim.com
 /* eslint-disable no-unused-vars */
 import { useState,useEffect } from "react";
 
-// @mui material components
-import Grid from "@mui/material/Grid";
-import Card from "@mui/material/Card";
-import FormControl from "@mui/material/FormControl"
 
 // Material Dashboard 2 React components
-import MDBox from "components/MDBox";
-import MDInput from "components/MDInput";
-import MDTypography from "components/MDTypography";
-import MDButton from "components/MDButton";
+import MDSnackbar from "components/MDSnackbar";
 
 // Material Dashboard 2 React example components
 import DashboardLayout from "examples/LayoutContainers/DashboardLayout";
 import DashboardNavbar from "examples/Navbars/DashboardNavbar";
 import Footer from "examples/Footer";
 
-import {addNewproject} from "./functions"
-import newParts from "./parts"
+// Hooks
+import useAddNewWorker from "hooks/useAddNewUser"
+import useAddNewProject from "hooks/useAddNewProject"
+
+// Child Components
+import NewCustomer from "./newCustomer";
+import NewProject from "./newProject";
+import NewWorker from "./newWorker";
 
 function New() {
   const [partsCount,setPartsCount] = useState(0);
-  const [customer,setCustomer] = useState(0);
-  const [step,setStep] = useState(1);
+  const [customer,setCustomer] = useState("");
+  const [wName,setWName] = useState("");
+  const [wNumber,setWNumber] = useState(0);
+  const [show, setShow] = useState(false);
+  const [sbTitle,setSbTitle] = useState("");
+  const [sbContent,setSbContent] = useState("");
+  const [sbColor,setSbColor] = useState("success");
 
-  const handlePartsCountChange = (e) => (setPartsCount(e.target.value));
-  const handleCustomer = (e) => (setCustomer(e.target.value));
-  const handleStepChange = (e) => {
-    setStep(step+1);
-    addNewproject({customer, id: 3, parts_count: partsCount});
+  const toggleSnackbar = () => setShow(!show);
+  const handleStatus = (title,content,color) => {
+    setSbTitle(title);
+    setSbContent(content);
+    setSbColor(color);
+    toggleSnackbar();
+  }
+  const handlePartsCountChange = (e) => (setPartsCount(parseInt(e.target.value,10)));
+  const handleCustomerChange = (e) => (setCustomer(e.target.value));
+  const handleWNameChange = (e) => (setWName(e.target.value));
+  const handleWNumberChange = (e) => (setWNumber(e.target.value));
+  const handleSaveProject = async(e) => {
+    try{
+      const dat = await useAddNewProject({id:3, customer, parts_count:partsCount});
+      console.log(dat);
+      setCustomer("");
+      setPartsCount(0);
+      setSbTitle("Project Added!");
+      setSbContent(`New Project has been added.`);
+      setSbColor("success");
+      toggleSnackbar();
+    }
+    catch(error){
+      if(error.toString().includes("invalid data")){
+        setSbTitle("Project did not Added!");
+        setSbContent(`All Fields are Required!`);
+        setSbColor("error");
+        toggleSnackbar();
+      }
+      else{
+        setSbTitle("Server Error!");
+        setSbContent(`Contact Admin!`);
+        setSbColor("error");
+        toggleSnackbar();
+      }
+    }
+  };
+  const handleSaveWorker = async (e) => {
+    try{
+      const dat = await useAddNewWorker({name:wName, id: wNumber, occupied: false, working: true});
+      console.log(dat);
+      setWName("");
+      setWNumber(0);
+      setSbTitle("Worker Added!");
+      setSbContent(`${wName} has been added under the ID ${wNumber}.`);
+      setSbColor("success");
+      toggleSnackbar();
+    }
+    catch(error){
+      if(error.toString().includes("invalid data")){
+        setSbTitle("Worker did not Added!");
+        setSbContent(`All Fields are Required!`);
+        setSbColor("error");
+        toggleSnackbar();
+      }
+      else{
+        setSbTitle("Server Error!");
+        setSbContent(`Contact Admin!`);
+        setSbColor("error");
+        toggleSnackbar();
+      }
+    }
   };
 
-  const NewParts = newParts(10);
 
   return (
     <DashboardLayout>
       <DashboardNavbar />
-        <MDBox pt={6} pb={3}>
-          <Grid container spacing={6}>
-            <Grid item xs={12}>
-              <Card>
-              <FormControl>
-                  <MDBox
-                    mx={2}
-                    mt={-3}
-                    py={3}
-                    px={2}
-                    variant="gradient"
-                    bgColor="info"
-                    borderRadius="lg"
-                    coloredShadow="info"
-                  >
-                    <MDTypography variant="h6" color="white">
-                      Add New Project
-                    </MDTypography>
-                  </MDBox>
-                  {step===1?(
-                  <MDBox
-                    mx={2}
-                    mt={-3}
-                    py={3}
-                    px={2}
-                  >
-                    <MDTypography variant="h7" color="dark">
-                      Customer
-                    </MDTypography>
-                    <Grid container spacing={{ xs: 2, md: 2 }} columns={{ xs: 4, sm: 8, md: 12 }}>
-                      <Grid item xs={2} sm={4} md={4} key={0}>
-                        <MDInput onChange={handleCustomer}/>
-                      </Grid>
-                    </Grid>
-                    <MDTypography variant="h7" color="dark">
-                      Parts Count
-                    </MDTypography>
-                    <Grid container spacing={{ xs: 2, md: 2 }} columns={{ xs: 4, sm: 8, md: 12 }}>
-                      <Grid item xs={2} sm={4} md={4} key={1}>
-                        <MDInput onChange={handlePartsCountChange} type="number" lable="Parts Count..."/>
-                      </Grid>
-                    </Grid>
-                    <Grid container spacing={{ xs: 2, md: 2 }} columns={{ xs: 4, sm: 8, md: 12 }}>
-                      <Grid item xs={2} sm={4} md={4} key={2}>
-                      <MDBox
-                        mx={2}
-                        mt={1}
-                        py={3}
-                        px={2}
-                      >
-                        <MDButton color="info" onClick={handleStepChange}>Next</MDButton>
-                      </MDBox>
-                      </Grid>
-                    </Grid>
-                  </MDBox>):(
-                  <MDBox
-                    mx={2}
-                    mt={1}
-                    py={3}
-                    px={2}
-                  >
-                    <Grid container spacing={{ xs: 2, md: 2 }} columns={{ xs: 4, sm: 8, md: 12 }}>
-                      <NewParts/>
-                    </Grid>
-                    
-                  </MDBox>
-                  )}
-                </FormControl>
-              </Card>
-            </Grid>
-          </Grid>
-        </MDBox>
+        <NewCustomer
+          handleStatus={handleStatus}
+        />
+        <NewProject 
+          handleCustomerChange={handleCustomerChange} 
+          handlePartsCountChange={handlePartsCountChange}
+          handleSaveProject={handleSaveProject}
+        />
+        <NewWorker
+          handleWNameChange={handleWNameChange}
+          handleWNumberChange={handleWNumberChange}
+          handleSaveWorker={handleSaveWorker}
+        />
+        <MDSnackbar
+          color={sbColor}
+          icon="notifications"
+          title={sbTitle}
+          content={sbContent}
+          dateTime="now"
+          open={show}
+          close={toggleSnackbar}
+        />
       <Footer />
     </DashboardLayout>
   );

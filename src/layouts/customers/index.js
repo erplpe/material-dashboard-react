@@ -12,7 +12,17 @@ Coded by www.creative-tim.com
 
 * The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
 */
+/* eslint-disable no-unused-vars */
+import { 
+  DataGrid,
+  GridCellEditStopParams,
+  GridCellEditStopReasons,
+  MuiEvent,
+  GridToolbar
+} from '@mui/x-data-grid';
 
+import { useEffect, useState } from "react";
+import PropTypes from "prop-types";
 // @mui material components
 import Grid from "@mui/material/Grid";
 import Card from "@mui/material/Card";
@@ -20,18 +30,30 @@ import Card from "@mui/material/Card";
 // Material Dashboard 2 React components
 import MDBox from "components/MDBox";
 import MDTypography from "components/MDTypography";
+import MDButton from 'components/MDButton';
 
 // Material Dashboard 2 React example components
+// import ComplexStatisticsCard from "examples/Cards/StatisticsCards/ComplexStatisticsCard";
 import DashboardLayout from "examples/LayoutContainers/DashboardLayout";
 import DashboardNavbar from "examples/Navbars/DashboardNavbar";
 import Footer from "examples/Footer";
-import DataTable from "examples/Tables/DataTable";
+// import DataTable from "examples/Tables/DataTable";
 
 // Data
-import NewPartsData from "./data";
+import partsData from "./data";
 
-function NewParts(partsCount) {
-  const { columns, rows } = NewPartsData(partsCount);
+
+function Customers() {
+  const [edited, setEdited] = useState([]);
+  const { rows,columns } = partsData();
+
+  const handlEdit = (id) => {
+    setEdited(edited.concat(id));
+  }
+
+  const handleSave = (id) => {
+    setEdited(edited.concat(id));
+  }
 
   return (
     <DashboardLayout>
@@ -51,17 +73,33 @@ function NewParts(partsCount) {
                 coloredShadow="info"
               >
                 <MDTypography variant="h6" color="white">
-                  Workers Table
+                  Parts
                 </MDTypography>
               </MDBox>
-              <MDBox pt={3}>
-                <DataTable
-                  table={{ columns, rows }}
-                  isSorted={false}
-                  entriesPerPage={false}
-                  showTotalEntries={false}
-                  noEndBorder
-                />
+              <MDBox
+                mx={2}
+                mt={3}
+                py={3}
+                px={2}
+              >
+                <Grid container rowSpacing={5} columnSpacing={{ xs: 1, sm: 2, md: 3 }}>
+                  <div style={{ height: 600, width: '100%' }}>
+                    <DataGrid
+                      rows={rows}
+                      columns={columns}
+                      experimentalFeatures={{ newEditingApi: true }}
+                      components={{Toolbar: GridToolbar}}
+                    />
+                    </div>
+                </Grid>
+                <MDBox
+                mx={2}
+                mt={3}
+                py={3}
+                px={2}
+                >
+                  <MDButton onClick={handleSave} color="info">Save</MDButton>
+                </MDBox>
               </MDBox>
             </Card>
           </Grid>
@@ -72,4 +110,5 @@ function NewParts(partsCount) {
   );
 }
 
-export default NewParts;
+
+export default Customers;

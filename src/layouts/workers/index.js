@@ -61,6 +61,7 @@ function Workers() {
                   entriesPerPage={false}
                   showTotalEntries={false}
                   noEndBorder
+                  canSearch
                 />
               </MDBox>
             </Card>

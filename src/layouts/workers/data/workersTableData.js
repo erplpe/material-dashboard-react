@@ -15,6 +15,11 @@ Coded by www.creative-tim.com
 * The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
 */
 
+/* eslint-disable no-unused-vars */
+
+import { Edit,Delete,ViewAgenda } from '@mui/icons-material';
+import { Grid} from "@mui/material";
+
 import { useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 // Material Dashboard 2 React components
@@ -29,6 +34,7 @@ import team2 from "assets/images/team-2.jpg";
 // mport team4 from "assets/images/team-4.jpg";
 
 import { getWorkers } from "../../../redux/slices/workersSlice";
+
 
 export default function data() {
   const [workers, setWorkers] = useState([]);
@@ -66,13 +72,15 @@ export default function data() {
       { Header: "assigned work", accessor: "work", align: "left" },
       { Header: "status", accessor: "status", align: "center" },
       { Header: "working", accessor: "working", align: "center" },
+      { Header: "customizene", accessor: "cust", align: "center" },
     ],
 
     rows: workers.map((worker) => ({
-      name: <Name image={team2} name={worker.name} id={worker.id} />,
+      // name: <Name image={team2} name={worker.name} id={worker.id} />,
+      name: worker.name,
       work: (
-        <MDTypography component="a" href="#" variant="caption" color="text" fontWeight="medium">
-          {worker.assigned_work}
+        <MDTypography component="a" href={worker.assigned_work==="N/A"?"#":worker.assigned_work} variant="caption" color="text" fontWeight="medium">
+          {worker.assigned_work==="N/A"?"N/A":worker.assigned_work.split("/")[3]}
         </MDTypography>
       ),
       status: (
@@ -95,6 +103,19 @@ export default function data() {
           />
         </MDBox>
       ),
+      cust:(
+        <Grid container spacing={2}>
+          <Grid item xs={4} key={0}>
+            <Delete/>
+          </Grid>
+          <Grid item xs={4} key={1}>
+            <Edit/>
+          </Grid>
+          <Grid item xs={4} key={2}>
+            <ViewAgenda/>
+          </Grid>
+        </Grid>
+      )
     })),
   };
 }

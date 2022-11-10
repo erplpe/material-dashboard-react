@@ -16,16 +16,14 @@ Coded by www.creative-tim.com
 */
 
 // @mui material components
-import Grid from "@mui/material/Grid";
 
+import { Grid } from "@mui/material";
+import MDButton from "components/MDButton";
+import MDTypography from "components/MDTypography";
 import { useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
-// Material Dashboard 2 React components
-import MDBox from "components/MDBox";
-import DefaultProjectCard from "examples/Cards/ProjectCards/DefaultProjectCard";
 
 import { getParts } from "redux/slices/partsSlice";
-import sw from "assets/images/sw.png";
 
 export default function data() {
   const [parts, setParts] = useState([]);
@@ -39,24 +37,46 @@ export default function data() {
   }, [prt.length]);
 
   return {
-    cards: parts.map((part) => (
-      <Grid item xs={12} md={6} lg={3} key={part.drawing_number}>
-        <MDBox mb={1.5}>
-          <DefaultProjectCard
-            image={sw}
-            label={`Drawing Number: ${part.drawing_number}`}
-            title={`Estimated Time: ${part.estimated_time}`}
-            description={`${part.completed}/${part.works_count} done!`}
-            action={{
-              type: "internal",
-              route: `/projects/${pKey}/${part.drawing_number}`,
-              color: "info",
-              label: "view project",
-            }}
-            authors={[]}
-          />
-        </MDBox>
-      </Grid>
-    )),
-  };
+    columns:[
+      { 
+        field: 'pnum', 
+        headerName: 'Part Number', 
+        type:"string", 
+        width: 240, 
+        editable: true,
+        renderCell : (params) =>(
+          <Grid container spacing={{ xs: 2, md: 3 }} columns={{ xs: 4, sm: 8, md: 12 }}>
+            <Grid item xs={4}>
+              <MDTypography>{params.value}</MDTypography>
+            </Grid>
+            <Grid item xs={8}>
+              <MDButton color="info">
+              <a href={`${window.location.pathname}/${params.value}`}>Progress</a>
+              </MDButton>
+            </Grid>
+          </Grid>
+        ),
+      },
+      { field: 'et', headerName: 'Estimated Time', type:"number", width: 240, editable: true },
+      { field: 'status', headerName: 'Status', type:"boolean", width: 180, editable: true },
+      { 
+        field: 'drawing', 
+        headerName: 'Drawing', 
+        width: 180, 
+        editable: false,
+        renderCell : () =>(
+          <strong>
+            <a href="/">Open Drawing</a>
+          </strong>
+          
+        ),
+       },
+    ],
+    rows:parts.map((part) => ({
+      id:part.id,
+      pnum: part.drawing_number,
+      et: part.estimated_time,
+      status:part.status,
+    })),
+  }
 }

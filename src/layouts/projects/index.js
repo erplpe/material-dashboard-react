@@ -34,7 +34,7 @@ import projectsTableData from "layouts/projects/data";
 
 
 function Projects() {
-  const { cards } = projectsTableData();
+  const { cards,rows,columns } = projectsTableData();
   return (
     <DashboardLayout>
       <DashboardNavbar />
@@ -57,36 +57,14 @@ function Projects() {
                 </MDTypography>
               </MDBox>
               <MDBox pt={3}>
-                <Grid container rowSpacing={5} columnSpacing={{ xs: 1, sm: 2, md: 3 }}>
-                  {cards}
-                </Grid>
-              </MDBox>
-            </Card>
-          </Grid>
-        </Grid>
-      </MDBox>
-      <MDBox pt={6} pb={3}>
-        <Grid container spacing={6}>
-          <Grid item xs={12}>
-            <Card>
-              <MDBox
-                mx={2}
-                mt={-3}
-                py={3}
-                px={2}
-                variant="gradient"
-                bgColor="info"
-                borderRadius="lg"
-                coloredShadow="info"
-              >
-                <MDTypography variant="h6" color="white">
-                  Add a New Project
-                </MDTypography>
-              </MDBox>
-              <MDBox pt={3}>
-                <Grid container rowSpacing={5} columnSpacing={{ xs: 1, sm: 2, md: 3 }}>
-                  {cards}
-                </Grid>
+                <DataTable
+                  table={{ columns, rows }}
+                  isSorted={false}
+                  entriesPerPage={false}
+                  showTotalEntries={false}
+                  noEndBorder
+                  canSearch
+                />
               </MDBox>
             </Card>
           </Grid>

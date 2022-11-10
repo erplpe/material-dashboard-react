@@ -38,7 +38,7 @@ function NewCustomer({handleStatus}){
     const handleSaveCustomer = async () =>{
         try{
             await useAddNewCustomer({
-                name,address,currency,email,mobile,work,contact_name:cName,payment_term:pT
+                id:Date.now(),name,address,currency,email,mobile,work,contact_name:cName,payment_term:pT
             });
             handleStatus("New Customer Added!",`${name} added successfully.`,"success");
         }

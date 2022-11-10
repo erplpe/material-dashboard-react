@@ -13,8 +13,6 @@ Coded by www.creative-tim.com
 * The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
 */
 
-import MUIDataTable from "mui-datatables";
-
 // @mui material components
 import Grid from "@mui/material/Grid";
 import Card from "@mui/material/Card";
@@ -27,26 +25,34 @@ import MDTypography from "components/MDTypography";
 import DashboardLayout from "examples/LayoutContainers/DashboardLayout";
 import DashboardNavbar from "examples/Navbars/DashboardNavbar";
 import Footer from "examples/Footer";
-// import DataTable from "examples/Tables/DataTable";
+import DataTable from "examples/Tables/DataTable";
 
 // Data
-// import machinesTableData from "layouts/machines/data/machinesTableData";
-// import projectsTableData from "layouts/machines/data/projectsTableData";
+import workersTableData from "layouts/reports/data/workers";
+import machinesTableData from "layouts/reports/data/machines";
+import { useState } from "react";
+import { MenuItem, Select } from "@mui/material";
 
-function Machines() {
-  const columns = ["Name", "Company", "City", "State"];
+/* eslint-disable no-unused-vars */
 
-  const data = [
-  ["Joe James", "Test Corp", "Yonkers", "NY"],
-  ["John Walsh", "Test Corp", "Hartford", "CT"],
-  ["Bob Herm", "Test Corp", "Tampa", "FL"],
-  ["James Houston", "Test Corp", "Dallas", "TX"],
-  ];
+function Reports() {
+  const tables={
+    0:"Worker Performance",
+    1:"Machine Performance"
+  }
+  const data={
+    0:workersTableData(),
+    1:machinesTableData()
+  }
+  const [type,setType] = useState(0);
+  let { columns, rows } = data[type];
 
-  const options = {
-    filterType: 'checkbox',
-    rowsPerPage: 2
-  };
+  const handleChange = (event) => {
+    setType(event.target.value);
+    columns= data[type].columns;
+    rows= data[type].rows;
+  }
+
   return (
     <DashboardLayout>
       <DashboardNavbar />
@@ -54,6 +60,26 @@ function Machines() {
         <Grid container spacing={6}>
           <Grid item xs={12}>
             <Card>
+                <Select
+                  labelId="demo-simple-select-helper-label"
+                  id="demo-simple-select-helper"
+                  value={type}
+                  label="Age"
+                  onChange={handleChange}
+                >
+                  <MenuItem value={0}>
+                    Workers Performance
+                  </MenuItem>
+                  <MenuItem value={1}>
+                    Machine Performance
+                  </MenuItem>
+                </Select>
+                <MDBox
+                mx={2}
+                mt={3}
+                py={3}
+                px={5}
+              >{" "}</MDBox>
               <MDBox
                 mx={2}
                 mt={-3}
@@ -65,15 +91,16 @@ function Machines() {
                 coloredShadow="info"
               >
                 <MDTypography variant="h6" color="white">
-                  Milling
+                  {tables[type]} Report
                 </MDTypography>
               </MDBox>
               <MDBox pt={3}>
-                <MUIDataTable
-                  title="Employee List"
-                  data={data}
-                  columns={columns}
-                  options={options}
+                <DataTable
+                  table={{ columns, rows }}
+                  isSorted={false}
+                  entriesPerPage={false}
+                  showTotalEntries={false}
+                  noEndBorder
                 />
               </MDBox>
             </Card>
@@ -85,6 +112,4 @@ function Machines() {
   );
 }
 
-export default Machines;
-
-
+export default Reports;

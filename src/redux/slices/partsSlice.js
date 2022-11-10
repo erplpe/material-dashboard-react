@@ -13,7 +13,11 @@ export const partsSlice = createSlice({
   extraReducers(builder) {
     builder.addCase(getParts.fulfilled, (state, action) => {
       const data = action.payload.payload;
-      return data;
+      data.forEach((element) => {
+        const index = state.indexOf(element);
+        state.splice(index,1);
+        state.push(element);
+      })
     });
   },
 });
@@ -23,6 +27,7 @@ export const getParts = createAsyncThunk("parts/getParts", async (projectKey) =>
     const newData = querySnapshot.docs.map((doc) => {
       const originalData = doc.data();
       originalData.id=doc.id;
+      originalData.projectKey = projectKey;
       return { ...originalData };
     });
     return newData;

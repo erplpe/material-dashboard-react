@@ -16,15 +16,18 @@ Coded by www.creative-tim.com
 */
 
 // @mui material components
-import MDTypography from "components/MDTypography";
 
+import { Launch } from "@mui/icons-material";
+import { IconButton } from "@mui/material";
 import { useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { getCustomers } from "redux/slices/customersSlice";
+import SimpleDialog from "../dialog";
 
 
 export default function data() {
   const [customers, setCustomers] = useState([]);
+  const [open, setOpen] = useState(false);
   const cust = useSelector((state) => state.customers);
   const dispatch = useDispatch();
   useEffect(() => {
@@ -32,24 +35,36 @@ export default function data() {
     setCustomers(cust);
   }, [cust.length]);
 
+  const handleClickOpen = () => {
+    setOpen(true);
+  };
+
+  const handleClose = () => {
+    setOpen(false);
+  };
+  
   return {
     columns:[
-      { 
-        field: 'cid', 
-        headerName: 'Customer ID', 
-        type:"string", 
-        width: 120, 
-        editable: true,
-        renderCell : (params) =>(
-              <MDTypography>{params.value}</MDTypography>
-        ),
-      },
-      { field: 'name', headerName: 'Company Name', type:"text", width: 240, editable: true },
+      { Header: "Customer Id", accessor: "cid", width:"20%" ,align: "left" },
+      { Header: "Customer Name", accessor: "name", align: "left" },
+      { Header: "Details", accessor: "details", align: "left" },
     ],
     rows:customers.map((customer) => ({
-      id: customer.id,
       cid: customer.id,
       name:customer.name,
+      details:(
+        <div>
+          <IconButton onClick={handleClickOpen}>
+            <Launch/>
+          </IconButton>
+          <SimpleDialog
+            open={open}
+            onClose={handleClose}
+            data={customer}
+          />
+        </div>
+        
+      )
     })),
   }
 }

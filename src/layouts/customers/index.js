@@ -36,11 +36,13 @@ import MDButton from 'components/MDButton';
 // import ComplexStatisticsCard from "examples/Cards/StatisticsCards/ComplexStatisticsCard";
 import DashboardLayout from "examples/LayoutContainers/DashboardLayout";
 import DashboardNavbar from "examples/Navbars/DashboardNavbar";
+import DataTable from 'Items/Tables/DataTable';
 import Footer from "examples/Footer";
 // import DataTable from "examples/Tables/DataTable";
 
 // Data
 import partsData from "./data";
+
 
 
 function Customers() {
@@ -73,7 +75,7 @@ function Customers() {
                 coloredShadow="info"
               >
                 <MDTypography variant="h6" color="white">
-                  Parts
+                  Customers
                 </MDTypography>
               </MDBox>
               <MDBox
@@ -83,14 +85,14 @@ function Customers() {
                 px={2}
               >
                 <Grid container rowSpacing={5} columnSpacing={{ xs: 1, sm: 2, md: 3 }}>
-                  <div style={{ height: 600, width: '100%' }}>
-                    <DataGrid
-                      rows={rows}
-                      columns={columns}
-                      experimentalFeatures={{ newEditingApi: true }}
-                      components={{Toolbar: GridToolbar}}
-                    />
-                    </div>
+                  <DataTable
+                    table={{ columns, rows }}
+                    isSorted={false}
+                    entriesPerPage={false}
+                    showTotalEntries={false}
+                    noEndBorder
+                    canSearch
+                  />
                 </Grid>
                 <MDBox
                 mx={2}

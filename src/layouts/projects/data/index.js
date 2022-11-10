@@ -16,13 +16,17 @@ Coded by www.creative-tim.com
 */
 
 // @mui material components
-import Grid from "@mui/material/Grid";
+import { Edit,NavigateNextRounded,Delete } from '@mui/icons-material';
+import { Grid, IconButton} from "@mui/material";
 
 import { useState, useEffect } from "react";
+import { useNavigate } from 'react-router-dom';
 import { useSelector, useDispatch } from "react-redux";
 // Material Dashboard 2 React components
 import MDBox from "components/MDBox";
 import DefaultProjectCard from "examples/Cards/ProjectCards/DefaultProjectCard";
+
+import useDeleteProject from 'hooks/useDeleteProject';
 
 import { getprojects } from "redux/slices/projectsSlice";
 import sw from "assets/images/sw.png";
@@ -32,10 +36,21 @@ export default function data() {
   const [projects, setProjects] = useState([]);
   const prj = useSelector((state) => state.projects);
   const dispatch = useDispatch();
+  const navigate = useNavigate()
+
   useEffect(() => {
     dispatch(getprojects());
     setProjects(prj);
   }, [prj.length]);
+
+  const handleGoto=(path)=>{
+    navigate(path);
+  }
+
+  const handleDelete =async (projectKey) =>{
+    await useDeleteProject(projectKey);
+    dispatch(getprojects());
+  }
 
   return {
     cards: projects.map((project) => (
@@ -57,5 +72,36 @@ export default function data() {
         </MDBox>
       </Grid>
     )),
+    columns: [
+      { Header: "Project Id", accessor: "id", width: "45%", align: "left" },
+      { Header: "Customer", accessor: "customer", align: "left" },
+      { Header: "Parts Count", accessor: "count", align: "center" },
+      { Header: "Customize", accessor: "customize", align: "center" },
+    ],
+
+    rows: projects.map((project) => ({
+      id:project.id,
+      customer:project.customer,
+      count:project.parts_count,
+      customize:(
+        <Grid container spacing={2}>
+          <Grid item xs={4} key={0}>
+            <IconButton onClick={()=>(handleGoto(`/projects/${project.key}`))}>
+              <Edit/>
+            </IconButton>
+          </Grid>
+          <Grid item xs={4} key={1}>
+            <IconButton onClick={()=>(handleGoto(`/projects/${project.key}`))}>
+              <NavigateNextRounded/>
+            </IconButton>
+          </Grid>
+          <Grid item xs={4} key={2}>
+            <IconButton onClick={()=>(handleDelete(project.key))}>
+              <Delete/>
+            </IconButton>
+          </Grid>
+        </Grid>
+        )
+    })),
   };
 }

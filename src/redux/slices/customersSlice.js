@@ -22,6 +22,7 @@ export const getCustomers = createAsyncThunk("customers/getCustomers", async (pr
   const data = await getDocs(collection(db, "customers")).then((querySnapshot) => {
     const newData = querySnapshot.docs.map((doc) => {
       const originalData = doc.data();
+      originalData.key = doc.id;
       return { ...originalData };
     });
     return newData;
